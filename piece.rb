@@ -10,9 +10,19 @@ class Piece
     @color = color
     @board = board
     @position = position
-    @char = " \u2B24 "
+    @char = " \u2B24 " # 2B24
   end
   
+  def perform_moves(sequence_of_moves)
+    begin
+      if valid_move_seq?(sequence_of_moves)
+        perform_moves!(sequence_of_moves)
+      end
+    rescue InvalidMoveError
+      puts "Invalid Move"
+      retry
+    end
+  end
   
   def perform_slide(new_position)
     new_y, new_x = new_position
@@ -47,7 +57,7 @@ class Piece
     elsif (x - new_x).abs  == 2 && (y - new_y)  == mod && 
       board[enemy_y][enemy_x].color != self.color && board[new_y][new_x].nil?
       
-     board[enemy_y][enemy_x], board[y][x], board[new_y][new_x] = nil, nil, self
+     board[new_y][new_x], board[enemy_y][enemy_x], board[y][x] = self, nil, nil
      @position = [new_y, new_x]
      return true
     end
@@ -56,7 +66,6 @@ class Piece
   end
   
   def valid_move_seq?(sequence_of_moves)
-
     y,x = @position
     dup_board = self.board.dup_board
     dup_piece = dup_board.grid[y][x]
@@ -84,16 +93,6 @@ class Piece
     end      
   end
   
-  def perform_moves(sequence_of_moves)
-    begin
-      if valid_move_seq?(sequence_of_moves)
-        perform_moves!(sequence_of_moves)
-      end
-    rescue InvalidMoveError
-      puts "Invalid Move"
-      retry
-    end
-  end
   
   
           

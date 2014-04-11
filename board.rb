@@ -64,12 +64,12 @@ class Board
   
   def dup_board
     board = self.grid
-    dup_board = Board.new(false)
+    dup_board = Board.new(false).grid
     
-    board.each_with_index do | row, y_idx |
-      row.each_with_index do | column, x_idx |
-        unless board[y_idx][x_idx].nil?
-          dup_board.grid[y_idx][x_idx] = Piece.new(board[y_idx][x_idx].color, dup_board, [y_idx, x_idx])
+    board.each_with_index do | row, y_axis |
+      row.each_with_index do | column, x_axis |
+        unless board[y_axis][x_idx].nil?
+          dup_board[y_axis][x_axis] = Piece.new(board[y_axis][x_axis].color, dup_board, [y_axis, x_axis])
         end
       end
     end
@@ -78,7 +78,7 @@ class Board
   end
   
   def won?(color)
-    self.grid.flatten.compact.all? { |piece| piece.color == :color } 
+    grid.flatten.compact.all? { |piece| piece.color == :color } 
   end
   
   #Allows the user to move through the board and select using their cursor
