@@ -10,18 +10,19 @@ class Piece
     @color = color
     @board = board
     @position = position
-    @char = " \u2B24 " # 2B24
+    @char = " \u2B24 " 
   end
   
   def perform_moves(sequence_of_moves)
-    begin
+    debugger
+    # begin
       if valid_move_seq?(sequence_of_moves)
         perform_moves!(sequence_of_moves)
       end
-    rescue InvalidMoveError
-      puts "Invalid Move"
-      retry
-    end
+    # rescue InvalidMoveError
+    #   puts "Invalid Move"
+    #   retry
+    # end
   end
   
   def perform_slide(new_position)
@@ -55,9 +56,9 @@ class Piece
     if board[enemy_y][enemy_x].nil?
       return false
     elsif (x - new_x).abs  == 2 && (y - new_y)  == mod && 
-      board[enemy_y][enemy_x].color != self.color && board[new_y][new_x].nil?
+      board.grid[enemy_y][enemy_x].color != self.color && board.grid[new_y][new_x].nil?
       
-     board[new_y][new_x], board[enemy_y][enemy_x], board[y][x] = self, nil, nil
+     board.grid[new_y][new_x], board.grid[enemy_y][enemy_x], board.grid[y][x] = self, nil, nil
      @position = [new_y, new_x]
      return true
     end
@@ -86,14 +87,12 @@ class Piece
     y,x = @position
     
     if sequence_of_moves.count == 1
-      perform_slide(sequence_of_moves[0])
-      perform_jump(sequence_of_moves[0])
-    else
+      perform_slide(sequence_of_moves[0]) 
+      perform_jump(sequence_of_moves[0]) 
+   else
       sequence_of_moves.each { |new_move| perform_jump(new_move) }
     end      
   end
-  
-  
-  
           
 end
+

@@ -8,19 +8,21 @@ class Board
   def initialize(load = true)
     @grid = Array.new(8) { Array.new(8) }
     @board = self
-    @cursor = [0,0]
+    # @cursor = [0,0]
     load_board if load
   end
   
   def load_board   
     @grid.reverse_each.with_index do |row, y_axis|
       row.each_with_index do |piece, x_axis|
+        
         # Loads red pieces
         if (y_axis == 0 || y_axis == 2) && x_axis.even?
           grid[y_axis][x_axis] = Piece.new(:red , @board, [y_axis, x_axis])
         elsif y_axis == 1 && x_axis.odd?
           grid[y_axis][x_axis] = Piece.new(:red , @board, [y_axis, x_axis])
         end
+        
         ## Loads white pieces
         if (y_axis == 5 || y_axis == 7) && x_axis.odd?
           grid[y_axis][x_axis] = Piece.new(:white , @board, [y_axis, x_axis])
@@ -64,12 +66,12 @@ class Board
   
   def dup_board
     board = self.grid
-    dup_board = Board.new(false).grid
+    dup_board = Board.new(false)
     
     board.each_with_index do | row, y_axis |
       row.each_with_index do | column, x_axis |
-        unless board[y_axis][x_idx].nil?
-          dup_board[y_axis][x_axis] = Piece.new(board[y_axis][x_axis].color, dup_board, [y_axis, x_axis])
+        unless board[y_axis][x_axis].nil?
+          dup_board.grid[y_axis][x_axis] = Piece.new(board[y_axis][x_axis].color, dup_board, [y_axis, x_axis])
         end
       end
     end
@@ -78,7 +80,7 @@ class Board
   end
   
   def won?(color)
-    grid.flatten.compact.all? { |piece| piece.color == :color } 
+    self.grid.flatten.compact.all? { |piece| piece.color == :color } 
   end
   
   #Allows the user to move through the board and select using their cursor
@@ -111,8 +113,9 @@ class Board
   
 end
 
-
-
+b = Board.new
+b.render
+p b.grid[5][1].perform_moves([[4, 0]])
 
 
 
