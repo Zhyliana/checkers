@@ -49,7 +49,6 @@ class Piece
       
      board[enemy_y][enemy_x], board[y][x], board[new_y][new_x] = nil, nil, self
      @position = [new_y, new_x]
- 
      return true
     end
     

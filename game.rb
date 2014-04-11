@@ -19,9 +19,7 @@ class Game
     puts "#{current_player} loses"
     
     nil
-  end
-  
-    
+  end    
   
 end
 
@@ -33,8 +31,7 @@ class HumanPlayer
   end
   
   def play_turn(board)
-
-    puts board.render
+    board.render
     puts "#{color}".capitalize + " make your move"
     
     from_pos = get_pos("What piece would you like to move? ex. [y, x]")
